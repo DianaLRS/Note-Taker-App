@@ -6,8 +6,8 @@ var fs = require("fs")
 
 //Link our files 
 //==========================================
-var db = require("./02-Homework/Develop/db/db.json")
-var mainDIR = require("./02-Homework/Develop/public/assets/js/index")
+var db = require("./develop/db/db.json")
+var mainDIR = require("./develop/public/assets/js/index")
 
 
 // Sets up the Express App
@@ -38,7 +38,7 @@ app.get("/notes", function(req, res) {
 });
 
 app.get("/api/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, "db.json"))
+    res.sendFile(path.join(__dirname, db))
 })
 
 //2.POST
