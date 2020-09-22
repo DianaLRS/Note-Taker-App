@@ -7,6 +7,7 @@ var fs = require("fs")
 //Link our files 
 //==========================================
 var db = require("./02-Homework/Develop/db/db.json")
+var mainDIR = require("./02-Homework/Develop/public/assets/js/index")
 
 
 // Sets up the Express App
