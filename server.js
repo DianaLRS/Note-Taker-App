@@ -1,25 +1,25 @@
 // Dependencies
 // =============================================================
-var express = require("express");
-var path = require("path");
-var fs = require("fs")
+const express = require("express");
+const path = require("path");
+const fs = require("fs")
 
 //Link our files 
 //==========================================
-var db = require("./develop/db/db.json")
-var mainDIR = require("./develop/public/assets/js/index")
-
+const db = require("./develop/db/db.json")
+const mainDir = path.join(__dirname, "/public");
 
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 8080;
 
 // Sets up the Express app to handle data parsing
 //=============================================================
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-//==========================================================
+app.use(express.static(__dirname + "/public"))
+    //==========================================================
 
 // SET PARAMETERS:
 //======================================================
@@ -30,15 +30,24 @@ app.use(express.json());
 //1.GET
 
 app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(mainDir, "index.html"));
+
 });
 
 app.get("/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, "notes.html"));
+    res.sendFile(path.join(mainDir, "notes.html"));
+
+
 });
 
 app.get("/api/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, db))
+    res.sendFile(path.join(__dirname, "./develop/db/db.json"))
+        //return all saved notes
+
+})
+
+app.get("/api/notes/:id", function(req, res) {
+    res.sendFile(path.join(__dirname, ""))
 })
 
 //2.POST
@@ -52,13 +61,6 @@ app.post("/api/notes", function(req, res) {
 app.delete("/api/notes/:id", function(req, res) {
     var id = req.params.id
 });
-
-// write with fs
-//====================================================
-
-
-
-
 
 //listen:
 //======================================================
