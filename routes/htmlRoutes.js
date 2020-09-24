@@ -1,26 +1,24 @@
-var path = require("path");
+// var path = require("path");
+
+// var fs = require("fs")
 
 
-// ===============================================================================
-// ROUTING
-// ===============================================================================
 
-module.exports = function(app) {
-    // HTML GET Requests
-    // Below code handles when users "visit" a page.
-    // In each of the below cases the user is shown an HTML page of content
-    // ---------------------------------------------------------------------------
 
-    app.get("/tables", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/tables.html"));
-    });
+// // ROUTES
+// // ===============================================================================
 
-    app.get("/reserve", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/reserve.html"));
-    });
+// module.exports = function(app) {
+//     // HTML GET Requests
 
-    // If no matching route is found default to home
-    app.get("*", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/home.html"));
-    });
-};
+//     app.get("/notes", function(req, res) {
+//         res.sendFile(path.join(__dirname, "../public/notes.html"));
+
+//     });
+
+//     app.get("*", function(req, res) {
+//         res.sendFile(path.join(__dirname, "../public/index.html"));
+
+//     });
+
+// };
