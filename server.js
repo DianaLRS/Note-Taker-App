@@ -31,84 +31,52 @@ app.use(express.static("public"))
 // HTML GET Requests:
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(mainPath, "notes.html"));
-
 });
 
 app.get("*", function(req, res) {
     res.sendFile(path.join(mainPath, "index.html"));
-
 });
 
 //API GET Requests:
-
 app.get("/api/notes", function(req, res) {
-
-
     //google return json files using app.get
-
-
     res.sendFile(path.join(__dirname, "/db/db.js"))
-
+    return res.body
 })
-
-
 
 //API POST Requests:
-
 app.post("/api/notes", function(req, res) {
-    // fs read file 
-    var newNote = req.body;
-    newNote.id = 6;
-    fs.readFile("./db/db.json", (err, fileData) => {
+    let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let newNote = req.body;
+    let uniqueID = (savedNotes.length).toString();
+    newNote.id = uniqueID;
+    savedNotes.push(newNote);
 
-
-        var parsedData = JSON.parse(fileData);
-
-        parsedData.push(newNote);
-
-        var stringData = JSON.stringify(parsedData);
-
-        fs.writeFile("./db/db.json", stringData, function() {
-            return res.json("./db/db.json");
-        })
-    })
-
-
-
-    //parse data 
-    // push new note into parse data
-
-    //convert data back into a string
-    //fs.writefile to write new string back into JSON file
-    //return new note to client
-
-
+    fs.writeFileSync("./db/db.json", JSON.stringify(savedNotes));
+    console.log("Note saved to db.json. Content: ", newNote);
+    return res.json(savedNotes);
 })
+
 
 //API DELETE Requests: 
 app.delete("/api/notes/:id", function(req, res) {
 
-    var currentNoteID = req.params.id;
     //read data
-    fs.readFile("./db/db.json", (err, fileData) => {
-
-
-        var parsedData = JSON.parse(fileData);
-
-        // array.filter(function(currentValue, index, arr), thisValue)
-
-        var filterdData = parsedData.filter(data => data.id != currentNoteID);
-
-        var stringData = JSON.stringify(filterdData);
-
-        fs.writeFile("./db/db.json", stringData, function() {
-                return res.json("./db/db.json");
-            })
-            //parse data
-            //.filter method to return everything based on conditions (id) // where id =/= currentNoteID. filter automatically deletes
-            //rewrite notes to db.json\
-
+    let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let noteID = req.params.id;
+    let newID = 0;
+    console.log(`Deleting note with ID ${noteID}`);
+    savedNotes = savedNotes.filter(currNote => {
+        return currNote.id != noteID;
     })
+
+    for (currNote of savedNotes) {
+        currNote.id = newID.toString();
+        newID++;
+    }
+
+    fs.writeFileSync("./db/db.json", JSON.stringify(savedNotes));
+    return res.json(savedNotes);
 });
 
 
