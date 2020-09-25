@@ -33,16 +33,18 @@ app.get("/notes", function(req, res) {
     res.sendFile(path.join(mainPath, "notes.html"));
 });
 
-app.get("*", function(req, res) {
-    res.sendFile(path.join(mainPath, "index.html"));
-});
+
 
 //API GET Requests:
 app.get("/api/notes", function(req, res) {
     //google return json files using app.get
-    res.sendFile(path.join(__dirname, "/db/db.js"))
+    res.sendFile(path.join(db, "db.json"))
     return res.body
+
 })
+app.get("*", function(req, res) {
+    res.sendFile(path.join(mainPath, "index.html"));
+});
 
 //API POST Requests:
 app.post("/api/notes", function(req, res) {
