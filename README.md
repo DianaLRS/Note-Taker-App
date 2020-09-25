@@ -16,8 +16,7 @@ The following necessary dependencies must be installed to run the application pr
 # Usage
 In order to use this app, click on the notes button. This will redirect the user to the notes page. The user can add a title, write the text and save by using the save button. The User can delete notes using the delete button. The user can edit using the edit button. 
 # License
-This project is licensed under the none license. 
-![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+This project is not licensed. 
 # Contributing
 ​Contributors: N/A
 # Tests
