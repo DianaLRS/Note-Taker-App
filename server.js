@@ -52,9 +52,11 @@ app.post("/api/notes", function(req, res) {
     newNote.id = uniqueID;
     savedNotes.push(newNote);
 
+
     fs.writeFileSync("./db/db.json", JSON.stringify(savedNotes));
     console.log("Note saved to db.json. Content: ", newNote);
-    return res.json(savedNotes);
+    res.json(savedNotes);
+
 })
 
 
