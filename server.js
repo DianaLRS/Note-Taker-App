@@ -48,15 +48,17 @@ app.get("*", function(req, res) {
 
 //API POST Requests:
 app.post("/api/notes", function(req, res) {
-    let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
-    let newNote = req.body;
-    let uniqueID = (savedNotes.length).toString();
-    newNote.id = uniqueID;
+    var savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    var newNote = req.body;
+
+
+    var uniqueId = (savedNotes.length).toString();
+    newNote.id = uniqueId;
     savedNotes.push(newNote);
 
 
     fs.writeFileSync("./db/db.json", JSON.stringify(savedNotes));
-    console.log("Note saved to db.json. Content: ", newNote);
+
     res.json(savedNotes);
 
 })
@@ -66,16 +68,18 @@ app.post("/api/notes", function(req, res) {
 app.delete("/api/notes/:id", function(req, res) {
 
     //read data
-    let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
-    let noteID = req.params.id;
-    let newID = 0;
-    console.log(`Deleting note with ID ${noteID}`);
-    savedNotes = savedNotes.filter(currNote => {
-        return currNote.id != noteID;
+    var savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    var noteID = req.params.id;
+    var newID = 0;
+
+    savedNotes = savedNotes.filter(currentNote => {
+
+        return currentNote.id != noteID;
+
     })
 
-    for (currNote of savedNotes) {
-        currNote.id = newID.toString();
+    for (currentNote of savedNotes) {
+        currentNote.id = newID.toString();
         newID++;
     }
 
